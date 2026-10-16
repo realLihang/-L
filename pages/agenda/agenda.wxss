@@ -1,0 +1,92 @@
+.page {
+  padding: 24rpx 0 60rpx;
+  min-height: 100vh;
+}
+
+.stat-card {
+  padding: 24rpx 28rpx;
+}
+.stat-text {
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.group {
+  padding: 18rpx 0;
+  border-bottom: 2rpx solid #f0f1f3;
+}
+.group:last-child {
+  border-bottom: none;
+}
+.g-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.gd-main {
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.gd-lunar {
+  font-size: 22rpx;
+  color: #8a6d3b;
+  margin-left: 12rpx;
+}
+.gd-week {
+  font-size: 23rpx;
+  color: #9aa1ab;
+  margin-left: 14rpx;
+}
+.gd-rel {
+  font-size: 23rpx;
+  color: #2f6fed;
+  margin-left: 14rpx;
+}
+.gd-rel.passed {
+  color: #9aa1ab;
+}
+.g-fest {
+  font-size: 23rpx;
+  color: #c62828;
+}
+
+.note-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14rpx 0 4rpx;
+}
+.ni-text {
+  font-size: 27rpx;
+  flex: 1;
+  min-width: 0;
+}
+.ni-del {
+  font-size: 24rpx;
+  color: #c62828;
+  flex: none;
+  margin-left: 20rpx;
+}
+
+.empty {
+  font-size: 28rpx;
+  color: #6b7280;
+  text-align: center;
+  padding: 20rpx 0 8rpx;
+}
+.empty-sub {
+  font-size: 24rpx;
+  color: #9aa1ab;
+  text-align: center;
+  padding-bottom: 10rpx;
+}
+
+.btn-back {
+  margin: 20rpx 24rpx;
+  background: #1c1f23;
+  color: #ffffff;
+  text-align: center;
+  font-size: 29rpx;
+  padding: 22rpx 0;
+  border-radius: 18rpx;
+}

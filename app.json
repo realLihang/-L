@@ -1,0 +1,18 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/agenda/agenda",
+    "pages/settings/settings",
+    "pages/share/share"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#c62828",
+    "navigationBarTitleText": "倒班日历",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f4f5f7"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

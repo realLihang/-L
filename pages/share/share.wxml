@@ -1,0 +1,13 @@
+<view class="share-page">
+  <view class="canvas-box">
+    <canvas type="2d" id="poster" class="poster"></canvas>
+  </view>
+
+  <view class="actions">
+    <button class="act primary" bindtap="saveAlbum">保存图片到相册</button>
+    <button class="act ghost" open-type="share">转发给同事</button>
+  </view>
+
+  <view class="tip">保存后发到朋友圈或班组群，邀请同事一起用「倒班日历」</view>
+  <view class="tip small">点右上角「···」也可把小程序转发给好友，帮你攒使用人数</view>
+</view>

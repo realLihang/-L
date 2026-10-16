@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "倒班日历",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "usingComponents": {}
+}

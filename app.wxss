@@ -1,0 +1,23 @@
+page {
+  background: #f4f5f7;
+  color: #1c1f23;
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 30rpx;
+  line-height: 1.5;
+}
+
+view, text, input, picker {
+  box-sizing: border-box;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 24rpx;
+  margin: 0 24rpx 20rpx;
+  padding: 28rpx;
+  box-shadow: 0 2rpx 6rpx rgba(16, 24, 40, 0.04), 0 12rpx 32rpx rgba(16, 24, 40, 0.05);
+}
+
+.muted {
+  color: #9aa1ab;
+}

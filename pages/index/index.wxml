@@ -1,0 +1,190 @@
+<view class="page">
+
+  <!-- 今日状态 -->
+  <view class="card today-card" bindtap="goToday">
+    <view class="badge {{today.type}}">
+      <text class="badge-main">{{today.isWork ? '班' : '休'}}</text>
+      <text class="badge-sub">{{today.week}}</text>
+    </view>
+    <view class="today-meta">
+      <view class="line1">{{today.dateText}} · {{today.typeText}}</view>
+      <view class="line-lunar" wx:if="{{today.lunarText}}">农历{{today.lunarText}}</view>
+      <view class="line2">{{today.progress}}</view>
+      <view class="line3">{{today.countdown}}</view>
+      <view class="line4">{{nextRestText}}</view>
+    </view>
+  </view>
+
+  <!-- 日历 -->
+  <view class="card">
+
+    <view class="cal-head">
+      <view class="head-left">
+        <view class="month-label" wx:if="{{viewMode === 'month'}}">{{monthLabel}}</view>
+        <view class="month-label" wx:elif="{{viewMode === 'week'}}">{{weekRangeText}}</view>
+        <view class="month-label" wx:else>{{year}} 年</view>
+        <view class="cycle-text">{{cycleText}}</view>
+      </view>
+      <view class="nav" wx:if="{{viewMode !== 'year'}}">
+        <view class="nav-btn" wx:if="{{viewMode === 'month'}}" bindtap="prevMonth">‹</view>
+        <view class="nav-btn" wx:else bindtap="prevWeek">‹</view>
+        <view class="nav-btn wide" bindtap="goToday">今天</view>
+        <view class="nav-btn" wx:if="{{viewMode === 'month'}}" bindtap="nextMonth">›</view>
+        <view class="nav-btn" wx:else bindtap="nextWeek">›</view>
+      </view>
+    </view>
+
+    <view class="tabs">
+      <view class="tab {{viewMode === 'month' ? 'on' : ''}}" data-mode="month" bindtap="switchView">月</view>
+      <view class="tab {{viewMode === 'week' ? 'on' : ''}}" data-mode="week" bindtap="switchView">周</view>
+      <view class="tab {{viewMode === 'year' ? 'on' : ''}}" data-mode="year" bindtap="switchView">年</view>
+    </view>
+
+    <!-- 月视图（左右平滑滑动切换上/下月；滑入实时变亮、松手沿方向落定） -->
+    <block wx:if="{{viewMode === 'month'}}">
+      <view class="weekdays">
+        <view wx:for="{{weekdays}}" wx:key="*this" class="wd {{index === 3 ? 'thu' : ''}}">{{item}}</view>
+      </view>
+      <view class="pager month-pager" id="monthPager" data-kind="month"
+            bindtouchstart="pagerStart" bindtouchmove="pagerMove" bindtouchend="pagerEnd" bindtouchcancel="pagerEnd">
+        <view class="pager-track" style="transform: translateX({{monthTrackX / 3}}%); transition: {{monthTrackT}};">
+          <view class="pager-page" wx:for="{{months}}" wx:for-index="pi" wx:key="pos" wx:for-item="m" style="opacity:{{monthOps[pi]}}">
+            <view class="grid">
+              <view wx:for="{{m.days}}" wx:for-item="item" wx:key="key" class="cell {{item.cls}}" data-key="{{item.key}}" bindtap="onTapDay">
+                <view class="num">{{item.num}}</view>
+                <view class="fest {{item.isFest ? 'hl' : ''}}" wx:if="{{item.fest}}">{{item.fest}}</view>
+                <view class="tag">{{item.tag}}</view>
+                <view class="note-dot" wx:if="{{item.hasNote}}"></view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 周视图（左右平滑滑动切换上/下一周） -->
+    <block wx:elif="{{viewMode === 'week'}}">
+      <view class="pager week-pager" id="weekPager" data-kind="week"
+            bindtouchstart="pagerStart" bindtouchmove="pagerMove" bindtouchend="pagerEnd" bindtouchcancel="pagerEnd">
+        <view class="pager-track" style="transform: translateX({{weekTrackX / 3}}%); transition: {{weekTrackT}};">
+          <view class="pager-page" wx:for="{{weeks}}" wx:for-index="pi" wx:key="pos" wx:for-item="w" style="opacity:{{weekOps[pi]}}">
+            <view class="week-row">
+              <view wx:for="{{w.days}}" wx:for-item="item" wx:key="key" class="wcard {{item.type}} {{item.cls}}" data-key="{{item.key}}" bindtap="onTapDay">
+                <view class="w-top">
+                  <text class="w-week">{{item.weekCn}}</text>
+                  <text class="w-date">{{item.monthNum}}/{{item.num}}</text>
+                </view>
+                <view class="w-state">{{item.isWork ? '上班' : '休班'}}</view>
+                <view class="w-sub">{{item.tag}}</view>
+                <view class="w-fest {{item.isFest ? 'hl' : ''}}" wx:if="{{item.fest}}">{{item.fest}}</view>
+                <view class="w-note" wx:if="{{item.noteCount}}">{{item.noteCount}} 条备忘</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 年视图 -->
+    <block wx:else>
+      <view class="year-grid">
+        <view wx:for="{{yearData}}" wx:key="month" class="ymonth" data-month="{{item.month}}" bindtap="onTapYearMonth">
+          <view class="ym-label">{{item.label}}</view>
+          <view class="ym-cells">
+            <view wx:for="{{item.cells}}" wx:for-item="c" wx:key="key" class="ym-cell {{c.cls}}"></view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <view class="legend">
+      <view class="lg"><view class="dot w"></view><text>上班</text></view>
+      <view class="lg"><view class="dot r"></view><text>休班</text></view>
+      <view class="lg"><text>右上点 = 新一轮第 1 天</text></view>
+      <view class="lg"><text>下边点 = 手动改过 / 有备忘</text></view>
+      <view class="lg"><text>日期下方：节日 → 节气 → 农历</text></view>
+    </view>
+
+    <view class="month-stat">{{statText}}</view>
+  </view>
+
+  <!-- 日程备忘 -->
+  <view class="card">
+    <view class="row head-row">
+      <view>
+        <view class="label">日程备忘</view>
+        <view class="hint">共 {{noteCount}} 条，点日历格子即可添加</view>
+      </view>
+      <view class="fold" bindtap="goAgenda">查看全部</view>
+    </view>
+    <view wx:if="{{agendaPreview.length}}" class="agenda-list">
+      <view wx:for="{{agendaPreview}}" wx:key="key" class="agenda-item" data-key="{{item.key}}" bindtap="onTapDay">
+        <view class="ag-date">{{item.dateText}}<text class="ag-rel">{{item.relText}}</text></view>
+        <view class="ag-text">{{item.text}}<text class="ag-more" wx:if="{{item.more}}">{{item.more}}</text></view>
+      </view>
+    </view>
+    <view wx:else class="empty">还没有备忘，点日历上任意一天添加</view>
+  </view>
+
+  <view class="card share-entry" bindtap="goShare">
+    <view>
+      <view class="label">分享卡片</view>
+      <view class="hint">生成今日排班海报，发朋友圈 / 班组群</view>
+    </view>
+    <view class="fold">制作 ›</view>
+  </view>
+
+  <view class="card setting-entry" bindtap="goSettings">
+    <view>
+      <view class="label">周期设置</view>
+      <view class="hint">上班 / 休班天数、起始日、每周第一天</view>
+    </view>
+    <view class="fold">前往 ›</view>
+  </view>
+
+  <view class="tip">左右滑动可切换月份或周；数据保存在本机微信里。</view>
+</view>
+
+<!-- 某天详情 -->
+<view wx:if="{{showDetail}}" class="mask" bindtap="closeDetail">
+  <view class="sheet" catchtap="noop">
+    <view class="sheet-head {{detail.type}}">
+      <view class="sh-left">
+        <view class="sh-date">{{detail.dateText}}</view>
+        <view class="sh-sub">{{detail.fullText}} {{detail.weekCn}}</view>
+      </view>
+      <view class="sh-badge">{{detail.typeText}}</view>
+    </view>
+
+    <view class="sheet-body">
+      <view class="sh-lunar">
+        <text class="sl-main">{{detail.lunarFull}}</text>
+        <text class="sl-year">{{detail.lunarYear}}</text>
+      </view>
+      <view class="sh-line fest-line" wx:if="{{detail.festival}}">{{detail.festival}}</view>
+      <view class="sh-line muted" wx:if="{{detail.term && detail.term !== detail.festival}}">节气：{{detail.term}}</view>
+      <view class="sh-line">{{detail.progress}}</view>
+      <view class="sh-line muted">{{detail.countdown}}</view>
+      <view class="sh-line muted" wx:if="{{detail.pinned}}">这一天已手动改过，不再按周期推算</view>
+
+      <view class="sh-actions">
+        <view class="act" bindtap="togglePin">{{detail.isWork ? '改成休班' : '改成上班'}}</view>
+        <view class="act ghost" wx:if="{{detail.pinned}}" bindtap="resetPin">恢复自动</view>
+      </view>
+
+      <view class="sh-sec">备忘</view>
+      <view wx:if="{{detail.notes.length}}" class="note-list">
+        <view wx:for="{{detail.notes}}" wx:key="id" class="note-item">
+          <text class="ni-text">{{item.text}}</text>
+          <text class="ni-del" data-id="{{item.id}}" catchtap="delNote">删除</text>
+        </view>
+      </view>
+      <view wx:else class="empty small">这一天还没有备忘</view>
+
+      <view class="note-input">
+        <input class="ni-ipt" value="{{inputText}}" placeholder="添加备忘，如：体检 / 交班" bindinput="onInput" confirm-type="done" bindconfirm="addNote" />
+        <view class="ni-btn" bindtap="addNote">添加</view>
+      </view>
+    </view>
+  </view>
+</view>

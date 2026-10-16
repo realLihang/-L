@@ -1,0 +1,138 @@
+.page {
+  padding: 24rpx 0 60rpx;
+  min-height: 100vh;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 0;
+  border-bottom: 2rpx solid #f0f1f3;
+}
+.row.last {
+  border-bottom: none;
+  padding-bottom: 4rpx;
+}
+.label {
+  font-size: 29rpx;
+}
+.hint {
+  font-size: 23rpx;
+  color: #9aa1ab;
+  margin-top: 4rpx;
+}
+.ctrl {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+.ipt {
+  border: 2rpx solid #e6e8eb;
+  border-radius: 14rpx;
+  padding: 12rpx 14rpx;
+  min-width: 110rpx;
+  text-align: center;
+  font-size: 28rpx;
+}
+.ipt.date {
+  min-width: 220rpx;
+}
+.unit {
+  font-size: 24rpx;
+  color: #9aa1ab;
+  margin-left: 10rpx;
+}
+.mini-btn {
+  border: 2rpx solid #e6e8eb;
+  border-radius: 14rpx;
+  padding: 12rpx 20rpx;
+  font-size: 25rpx;
+  margin-left: 14rpx;
+}
+.mini-btn.warn {
+  color: #c62828;
+  border-color: #f3cfcf;
+}
+
+.seg {
+  display: flex;
+  background: #f2f3f5;
+  border-radius: 14rpx;
+  padding: 4rpx;
+}
+.seg-item {
+  padding: 10rpx 22rpx;
+  font-size: 25rpx;
+  color: #6b7280;
+  border-radius: 10rpx;
+}
+.seg-item.on {
+  background: #ffffff;
+  color: #1c1f23;
+  font-weight: 600;
+}
+
+.pin-list {
+  margin-top: 8rpx;
+}
+.pin-item {
+  display: flex;
+  align-items: center;
+  padding: 14rpx 0;
+  border-top: 2rpx solid #f0f1f3;
+}
+.pi-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  margin-right: 14rpx;
+}
+.pi-dot.work {
+  background: #e5484d;
+}
+.pi-dot.rest {
+  background: #2fae63;
+}
+.pi-text {
+  flex: 1;
+  font-size: 26rpx;
+}
+.pi-del {
+  font-size: 24rpx;
+  color: #2f6fed;
+}
+
+.pv-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  margin-bottom: 14rpx;
+}
+.pv-item {
+  margin-bottom: 18rpx;
+}
+.pv-item:last-child {
+  margin-bottom: 0;
+}
+.pv-idx {
+  font-size: 23rpx;
+  color: #9aa1ab;
+}
+.pv-line {
+  font-size: 25rpx;
+  margin-top: 4rpx;
+}
+.work-line {
+  color: #c62828;
+}
+.rest-line {
+  color: #177a41;
+}
+
+.tip {
+  font-size: 23rpx;
+  color: #9aa1ab;
+  padding: 0 40rpx;
+  text-align: center;
+  line-height: 1.7;
+}

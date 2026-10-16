@@ -1,0 +1,63 @@
+.share-page {
+  padding: 30rpx 0 60rpx;
+  min-height: 100vh;
+  background: #f4f5f7;
+}
+
+.canvas-box {
+  margin: 0 40rpx;
+  border-radius: 28rpx;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 4rpx 10rpx rgba(16, 24, 40, 0.06), 0 18rpx 40rpx rgba(16, 24, 40, 0.08);
+}
+
+.poster {
+  width: 670rpx;
+  height: 893rpx;
+  display: block;
+}
+
+.actions {
+  display: flex;
+  margin: 36rpx 40rpx 0;
+}
+
+.act {
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  border-radius: 18rpx;
+  font-size: 30rpx;
+  border: none;
+  padding: 0;
+}
+
+.act::after {
+  border: none;
+}
+
+.act.primary {
+  background: #c62828;
+  color: #ffffff;
+  margin-right: 24rpx;
+}
+
+.act.ghost {
+  background: #ffffff;
+  color: #c62828;
+  border: 2rpx solid #c62828;
+}
+
+.tip {
+  font-size: 24rpx;
+  color: #9aa1ab;
+  text-align: center;
+  margin: 28rpx 56rpx 0;
+  line-height: 1.7;
+}
+
+.tip.small {
+  margin-top: 10rpx;
+}

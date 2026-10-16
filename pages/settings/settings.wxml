@@ -1,0 +1,103 @@
+<view class="page">
+
+  <view class="card">
+    <view class="row">
+      <view>
+        <view class="label">上班天数</view>
+        <view class="hint">连续上班的天数，1 — 60</view>
+      </view>
+      <view class="ctrl">
+        <input class="ipt" type="number" value="{{workDays}}" bindblur="onWorkDays" confirm-type="done" />
+        <text class="unit">天</text>
+      </view>
+    </view>
+
+    <view class="row">
+      <view>
+        <view class="label">休班天数</view>
+        <view class="hint">紧接着休息的天数，1 — 60</view>
+      </view>
+      <view class="ctrl">
+        <input class="ipt" type="number" value="{{restDays}}" bindblur="onRestDays" confirm-type="done" />
+        <text class="unit">天</text>
+      </view>
+    </view>
+
+    <view class="row">
+      <view>
+        <view class="label">周期起始日</view>
+        <view class="hint">本轮上班第 1 天（当前{{anchorWeek}}）</view>
+      </view>
+      <view class="ctrl">
+        <picker mode="date" value="{{anchor}}" start="2000-01-01" end="2099-12-31" bindchange="onAnchorChange">
+          <view class="ipt date">{{anchor}}</view>
+        </picker>
+        <view class="mini-btn" bindtap="alignThu">对齐周四</view>
+      </view>
+    </view>
+
+    <view class="row last">
+      <view>
+        <view class="label">每周第一天</view>
+        <view class="hint">日历左侧第一列显示周几</view>
+      </view>
+      <view class="ctrl">
+        <view class="seg">
+          <view class="seg-item {{weekStart === 0 ? 'on' : ''}}" data-v="0" bindtap="setWeekStart">周一</view>
+          <view class="seg-item {{weekStart === 1 ? 'on' : ''}}" data-v="1" bindtap="setWeekStart">周日</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="row">
+      <view>
+        <view class="label">手动调整的日子</view>
+        <view class="hint">{{pinCount ? '共 ' + pinCount + ' 天被单独改过' : '还没有手动改过任何一天'}}</view>
+      </view>
+      <view class="ctrl">
+        <view class="mini-btn warn" bindtap="clearPins">全部清除</view>
+      </view>
+    </view>
+    <view wx:if="{{pinList.length}}" class="pin-list">
+      <view wx:for="{{pinList}}" wx:key="key" class="pin-item">
+        <view class="pi-dot {{item.type}}"></view>
+        <view class="pi-text">{{item.dateText}} {{item.weekCn}} → {{item.typeText}}</view>
+        <view class="pi-del" data-key="{{item.key}}" bindtap="delPin">撤销</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="pv-title">接下来两轮</view>
+    <view wx:for="{{preview}}" wx:key="idx" class="pv-item">
+      <view class="pv-idx">第 {{item.idx}} 轮</view>
+      <view class="pv-line work-line">{{item.work}}</view>
+      <view class="pv-line rest-line">{{item.rest}}</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="row">
+      <view>
+        <view class="label">清空所有备忘</view>
+        <view class="hint">日程备忘会被全部删除</view>
+      </view>
+      <view class="ctrl">
+        <view class="mini-btn warn" bindtap="clearNotes">清空</view>
+      </view>
+    </view>
+    <view class="row last">
+      <view>
+        <view class="label">恢复默认设置</view>
+        <view class="hint">上 14 天 / 休 7 天，从周四开始</view>
+      </view>
+      <view class="ctrl">
+        <view class="mini-btn" bindtap="resetAll">恢复</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="tip">设置保存在本机微信里，换手机或清缓存后需重新设置一次。</view>
+</view>
