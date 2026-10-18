@@ -7,6 +7,8 @@ var DEFAULTS = {
   restDays: 7,
   anchor: '2026-09-24',   // 周四，上班第 1 天
   weekStart: 0,           // 0=周一开头，1=周日开头
+  dailySubsidy: 80,       // 每个上班日的补贴
+  baseSalary: 3450,       // 每月固定基本工资补贴
   pins: {}
 };
 
@@ -19,6 +21,12 @@ function clamp(v, def) {
   return Math.min(60, Math.max(1, n));
 }
 
+function clampNum(v, def, min, max) {
+  var n = parseInt(v, 10);
+  if (!isFinite(n)) n = def;
+  return Math.min(max, Math.max(min, n));
+}
+
 function normalize(o) {
   o = o || {};
   return {
@@ -26,6 +34,8 @@ function normalize(o) {
     restDays: clamp(o.restDays, DEFAULTS.restDays),
     anchor: /^\d{4}-\d{2}-\d{2}$/.test(o.anchor) ? o.anchor : DEFAULTS.anchor,
     weekStart: o.weekStart === 1 ? 1 : 0,
+    dailySubsidy: clampNum(o.dailySubsidy, DEFAULTS.dailySubsidy, 0, 99999),
+    baseSalary: clampNum(o.baseSalary, DEFAULTS.baseSalary, 0, 999999),
     pins: (o.pins && typeof o.pins === 'object') ? o.pins : {}
   };
 }

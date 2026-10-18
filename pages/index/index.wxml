@@ -126,12 +126,30 @@
     <view wx:else class="empty">还没有备忘，点日历上任意一天添加</view>
   </view>
 
-  <view class="card share-entry" bindtap="goShare">
-    <view>
-      <view class="label">分享卡片</view>
-      <view class="hint">生成今日排班海报，发朋友圈 / 班组群</view>
+  <view class="two-col">
+    <view class="card salary-card" bindtap="goSettings">
+      <view class="sc-head">
+        <view class="sc-label">薪资 · {{salary.label}}</view>
+        <view class="sc-edit">修改 ›</view>
+      </view>
+      <view class="sc-total">{{salary.totalText}}</view>
+      <view class="sc-line">
+        <text class="sc-k">上班 {{salary.workDays}} 天 × {{salary.dailyText}}</text>
+        <text class="sc-v">{{salary.workPayText}}</text>
+      </view>
+      <view class="sc-line">
+        <text class="sc-k">基本工资</text>
+        <text class="sc-v">{{salary.baseText}}</text>
+      </view>
     </view>
-    <view class="fold">制作 ›</view>
+
+    <view class="card share-half" bindtap="goShare">
+      <view class="sc-head">
+        <view class="sc-label">分享卡片</view>
+        <view class="sc-edit">制作 ›</view>
+      </view>
+      <view class="hint">生成今日排班海报，<br/>发朋友圈 / 班组群</view>
+    </view>
   </view>
 
   <view class="card setting-entry" bindtap="goSettings">

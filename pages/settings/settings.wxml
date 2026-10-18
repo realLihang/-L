@@ -53,6 +53,30 @@
   <view class="card">
     <view class="row">
       <view>
+        <view class="label">上班补贴</view>
+        <view class="hint">每个上班日补贴的金额</view>
+      </view>
+      <view class="ctrl">
+        <input class="ipt" type="number" value="{{dailySubsidy}}" bindblur="onDaily" confirm-type="done" />
+        <text class="unit">元/天</text>
+      </view>
+    </view>
+
+    <view class="row last">
+      <view>
+        <view class="label">基本工资</view>
+        <view class="hint">每月固定的基本工资补贴</view>
+      </view>
+      <view class="ctrl">
+        <input class="ipt" type="number" value="{{baseSalary}}" bindblur="onBase" confirm-type="done" />
+        <text class="unit">元/月</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="row">
+      <view>
         <view class="label">手动调整的日子</view>
         <view class="hint">{{pinCount ? '共 ' + pinCount + ' 天被单独改过' : '还没有手动改过任何一天'}}</view>
       </view>

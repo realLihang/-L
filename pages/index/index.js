@@ -5,6 +5,11 @@ var store = require('../../utils/store.js');
 
 var app = getApp();
 
+// 千分位金额格式化：5130 -> "5,130"
+function fmtMoney(n) {
+  return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
 Page({
   data: {
     viewMode: 'month',          // month | week | year
@@ -24,6 +29,7 @@ Page({
     weekRangeText: '',
     cycleText: '',
     nextRestText: '',
+    salary: { label: '', workDays: 0, dailyText: '0', baseText: '0', workPayText: '0', totalText: '0' },
     today: {},
     settings: {},
     showDetail: false,
@@ -122,6 +128,22 @@ Page({
       statText = '本月上班 ' + monthData.workCount + ' 天 · 休班 ' + monthData.restCount + ' 天';
       patch.weekRangeText = '';
     }
+
+    // 薪资：按当前查看的月份计算（切换月份时同步更新）
+    var salaryWorkCount = (mode === 'month')
+      ? monthData.workCount
+      : C.buildMonth(this.viewYear, this.viewMonth, s, this.notes, s.weekStart).workCount;
+    var _daily = s.dailySubsidy;
+    var _base = s.baseSalary;
+    var _workPay = salaryWorkCount * _daily;
+    patch.salary = {
+      label: this.viewYear + ' 年 ' + (this.viewMonth + 1) + ' 月',
+      workDays: salaryWorkCount,
+      dailyText: fmtMoney(_daily),
+      baseText: fmtMoney(_base),
+      workPayText: fmtMoney(_workPay),
+      totalText: fmtMoney(_workPay + _base)
+    };
 
     var st = S.statusOf(todayKey, s);
     var nextRest = this.findNext(todayKey, 'rest', s);

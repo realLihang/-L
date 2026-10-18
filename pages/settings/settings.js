@@ -9,6 +9,8 @@ Page({
     anchorWeek: '',
     weekStart: 0,
     weekStartText: '周一',
+    dailySubsidy: 80,
+    baseSalary: 3450,
     pinCount: 0,
     pinList: [],
     preview: []
@@ -37,6 +39,8 @@ Page({
     this.setData({
       workDays: s.workDays,
       restDays: s.restDays,
+      dailySubsidy: s.dailySubsidy,
+      baseSalary: s.baseSalary,
       anchor: s.anchor,
       anchorWeek: S.WEEK_CN[S.weekIdx(S.parseKey(s.anchor))],
       weekStart: s.weekStart,
@@ -63,6 +67,20 @@ Page({
     var v = parseInt(e.detail.value, 10);
     if (!isFinite(v)) v = store.DEFAULTS.restDays;
     this.settings.restDays = Math.min(60, Math.max(1, v));
+    this.apply();
+  },
+
+  onDaily: function (e) {
+    var v = parseInt(e.detail.value, 10);
+    if (!isFinite(v)) v = store.DEFAULTS.dailySubsidy;
+    this.settings.dailySubsidy = Math.min(99999, Math.max(0, v));
+    this.apply();
+  },
+
+  onBase: function (e) {
+    var v = parseInt(e.detail.value, 10);
+    if (!isFinite(v)) v = store.DEFAULTS.baseSalary;
+    this.settings.baseSalary = Math.min(999999, Math.max(0, v));
     this.apply();
   },
 
@@ -127,7 +145,7 @@ Page({
     var self = this;
     wx.showModal({
       title: '恢复默认',
-      content: '上班 14 天 / 休班 7 天，起始日回到 2026-09-24（周四），并清除手动调整。',
+      content: '上班 14 天 / 休班 7 天，起始日回到 2026-09-24（周四），上班补贴 80、基本工资 3450，并清除手动调整。',
       success: function (res) {
         if (res.confirm) {
           self.settings = store.saveSettings(store.DEFAULTS);
