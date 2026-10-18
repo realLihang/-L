@@ -108,24 +108,6 @@
     <view class="month-stat">{{statText}}</view>
   </view>
 
-  <!-- 日程备忘 -->
-  <view class="card">
-    <view class="row head-row">
-      <view>
-        <view class="label">日程备忘</view>
-        <view class="hint">共 {{noteCount}} 条，点日历格子即可添加</view>
-      </view>
-      <view class="fold" bindtap="goAgenda">查看全部</view>
-    </view>
-    <view wx:if="{{agendaPreview.length}}" class="agenda-list">
-      <view wx:for="{{agendaPreview}}" wx:key="key" class="agenda-item" data-key="{{item.key}}" bindtap="onTapDay">
-        <view class="ag-date">{{item.dateText}}<text class="ag-rel">{{item.relText}}</text></view>
-        <view class="ag-text">{{item.text}}<text class="ag-more" wx:if="{{item.more}}">{{item.more}}</text></view>
-      </view>
-    </view>
-    <view wx:else class="empty">还没有备忘，点日历上任意一天添加</view>
-  </view>
-
   <view class="two-col">
     <view class="card salary-card" bindtap="goSettings">
       <view class="sc-head">
@@ -150,6 +132,24 @@
       </view>
       <view class="hint">生成今日排班海报，<br/>发朋友圈 / 班组群</view>
     </view>
+  </view>
+
+  <!-- 日程备忘 -->
+  <view class="card">
+    <view class="row head-row">
+      <view>
+        <view class="label">日程备忘</view>
+        <view class="hint">共 {{noteCount}} 条，点日历格子即可添加</view>
+      </view>
+      <view class="fold" bindtap="goAgenda">查看全部</view>
+    </view>
+    <view wx:if="{{agendaPreview.length}}" class="agenda-list">
+      <view wx:for="{{agendaPreview}}" wx:key="key" class="agenda-item" data-key="{{item.key}}" bindtap="onTapDay">
+        <view class="ag-date">{{item.dateText}}<text class="ag-rel">{{item.relText}}</text></view>
+        <view class="ag-text">{{item.text}}<text class="ag-more" wx:if="{{item.more}}">{{item.more}}</text></view>
+      </view>
+    </view>
+    <view wx:else class="empty">还没有备忘，点日历上任意一天添加</view>
   </view>
 
   <view class="card setting-entry" bindtap="goSettings">
