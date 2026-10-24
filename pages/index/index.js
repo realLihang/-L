@@ -131,14 +131,16 @@ Page({
 
     // 薪资口径：当月基本工资 + 上个月上班补贴（当月还没结束，补贴按上月实际出勤计）
     var _prev = this.adjMonth(this.viewYear, this.viewMonth, -1);
-    var salaryWorkCount = C.buildMonth(_prev.y, _prev.m, s, this.notes, s.weekStart).workCount;
+    var prevWorkCount = (mode === 'month')
+      ? patch.months[0].workCount          // 月视图左页即上一月，统计已算好，复用避免重复构建
+      : C.buildMonth(_prev.y, _prev.m, s, this.notes, s.weekStart).workCount;
     var _daily = s.dailySubsidy;
     var _base = s.baseSalary;
-    var _workPay = salaryWorkCount * _daily;
+    var _workPay = prevWorkCount * _daily;
     patch.salary = {
       label: this.viewYear + ' 年 ' + (this.viewMonth + 1) + ' 月',
-      prevLabel: _prev.y + ' 年 ' + (_prev.m + 1) + ' 月',
-      workDays: salaryWorkCount,
+      prevLabel: (_prev.m + 1) + '月',
+      workDays: prevWorkCount,
       dailyText: fmtMoney(_daily),
       baseText: fmtMoney(_base),
       workPayText: fmtMoney(_workPay),

@@ -1,4 +1,5 @@
 // 农历 / 节气 / 传统节日。数据来自 utils/lunar-data.js（生成时已校验）
+var S = require('./shift.js');   // 复用 keyOf / parseKey / diffDays，避免重复实现
 var DATA = require('./lunar-data.js');
 var DAY = 86400000;
 
@@ -14,15 +15,9 @@ var GAN = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸']
 var ZHI = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
 var ANIMAL = ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'];
 
-function pad(n) { return n < 10 ? '0' + n : '' + n; }
-function keyOf(d) {
-  return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate());
-}
-function parseKey(s) {
-  var p = String(s).split('-');
-  return new Date(Date.UTC(+p[0], +p[1] - 1, +p[2]));
-}
-function diffDays(a, b) { return Math.round((a.getTime() - b.getTime()) / DAY); }
+function keyOf(d) { return S.keyOf(d); }
+function parseKey(s) { return S.parseKey(s); }
+function diffDays(a, b) { return S.diffDays(a, b); }
 
 // 农历传统节日（key = 月-日，闰月不重复过节）
 var FESTIVAL = {

@@ -90,11 +90,14 @@ function cellInfo(d, month, s, notes, todayKey, weekStart, noOther) {
     key: k,
     num: d.getUTCDate(),
     type: st.type,
+    pos: st.pos,
+    pinned: !!st.pinned,
     cls: cls.join(' '),
     tag: (st.type === 'work' ? '班' : '休') + S.dayNoOf(st, s),
     fest: f.text,
     isFest: f.isFest,
     lunarDay: f.lunarDay,
+    lunarFull: f.lunarFull,
     hasNote: !!(notes && notes[k] && notes[k].length)
   };
 }
@@ -126,21 +129,20 @@ function buildWeek(weekAnchor, s, notes, weekStart) {
   for (var i = 0; i < 7; i++) {
     var d = S.addDays(start, i);
     var info = cellInfo(d, d.getUTCMonth(), s, notes, todayKey, weekStart, true);
-    var st = S.statusOf(info.key, s);
-    var f = festOf(info.key);
+    var st = { type: info.type, pos: info.pos, pinned: info.pinned };
     days.push({
       key: info.key,
       num: d.getUTCDate(),
       monthNum: d.getUTCMonth() + 1,
       weekCn: S.WEEK_CN[S.weekIdx(d)],
-      type: st.type,
-      isWork: st.type === 'work',
+      type: info.type,
+      isWork: info.type === 'work',
       cls: info.cls,
       tag: info.tag,
-      fest: f.text,
-      isFest: f.isFest,
-      lunarDay: f.lunarDay,
-      lunarFull: f.lunarFull,
+      fest: info.fest,
+      isFest: info.isFest,
+      lunarDay: info.lunarDay,
+      lunarFull: info.lunarFull,
       hasNote: info.hasNote,
       noteCount: (notes && notes[info.key]) ? notes[info.key].length : 0,
       progress: st.type === 'work'
