@@ -116,7 +116,7 @@
       </view>
       <view class="sc-total">{{salary.totalText}}</view>
       <view class="sc-line">
-        <text class="sc-k">上班 {{salary.workDays}} 天 × {{salary.dailyText}}</text>
+        <text class="sc-k">上月上班 {{salary.workDays}} 天 × {{salary.dailyText}}</text>
         <text class="sc-v">{{salary.workPayText}}</text>
       </view>
       <view class="sc-line">

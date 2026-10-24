@@ -5,7 +5,7 @@ var store = require('../../utils/store.js');
 
 var app = getApp();
 
-// 千分位金额格式化：5130 -> "5,130"
+// 千分位金额格式化：4801 -> "4,801"
 function fmtMoney(n) {
   return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
@@ -129,15 +129,15 @@ Page({
       patch.weekRangeText = '';
     }
 
-    // 薪资：按当前查看的月份计算（切换月份时同步更新）
-    var salaryWorkCount = (mode === 'month')
-      ? monthData.workCount
-      : C.buildMonth(this.viewYear, this.viewMonth, s, this.notes, s.weekStart).workCount;
+    // 薪资口径：当月基本工资 + 上个月上班补贴（当月还没结束，补贴按上月实际出勤计）
+    var _prev = this.adjMonth(this.viewYear, this.viewMonth, -1);
+    var salaryWorkCount = C.buildMonth(_prev.y, _prev.m, s, this.notes, s.weekStart).workCount;
     var _daily = s.dailySubsidy;
     var _base = s.baseSalary;
     var _workPay = salaryWorkCount * _daily;
     patch.salary = {
       label: this.viewYear + ' 年 ' + (this.viewMonth + 1) + ' 月',
+      prevLabel: _prev.y + ' 年 ' + (_prev.m + 1) + ' 月',
       workDays: salaryWorkCount,
       dailyText: fmtMoney(_daily),
       baseText: fmtMoney(_base),

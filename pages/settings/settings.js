@@ -10,7 +10,7 @@ Page({
     weekStart: 0,
     weekStartText: '周一',
     dailySubsidy: 80,
-    baseSalary: 3450,
+    baseSalary: 3121,
     pinCount: 0,
     pinList: [],
     preview: []
@@ -145,7 +145,7 @@ Page({
     var self = this;
     wx.showModal({
       title: '恢复默认',
-      content: '上班 14 天 / 休班 7 天，起始日回到 2026-09-24（周四），上班补贴 80、基本工资 3450，并清除手动调整。',
+      content: '上班 14 天 / 休班 7 天，起始日回到 2026-09-24（周四），上班补贴 80、基本工资 3121，并清除手动调整。',
       success: function (res) {
         if (res.confirm) {
           self.settings = store.saveSettings(store.DEFAULTS);

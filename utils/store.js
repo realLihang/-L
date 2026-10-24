@@ -8,12 +8,13 @@ var DEFAULTS = {
   anchor: '2026-09-24',   // 周四，上班第 1 天
   weekStart: 0,           // 0=周一开头，1=周日开头
   dailySubsidy: 80,       // 每个上班日的补贴
-  baseSalary: 3450,       // 每月固定基本工资补贴
+  baseSalary: 3121,       // 每月固定基本工资补贴
   pins: {}
 };
 
 // 旧版默认值，用于自动迁移（未手动改过设置的老用户会跟着更新）
 var LEGACY_ANCHOR = '2026-10-01';
+var LEGACY_BASE = 3450;   // 旧版基本工资默认值
 
 function clamp(v, def) {
   var n = parseInt(v, 10);
@@ -48,6 +49,11 @@ function getSettings() {
   // 仍是旧默认且没手动改过任何一天 → 迁移到新的起始日
   if (raw && raw.anchor === LEGACY_ANCHOR && !Object.keys(raw.pins || {}).length) {
     raw.anchor = DEFAULTS.anchor;
+    saveSettings(normalize(raw));
+  }
+  // 基本工资旧默认值 → 新默认值（3450 → 3121），已手动改过的保持不变
+  if (raw && raw.baseSalary === LEGACY_BASE) {
+    raw.baseSalary = DEFAULTS.baseSalary;
     saveSettings(normalize(raw));
   }
   if (raw) return normalize(raw);
